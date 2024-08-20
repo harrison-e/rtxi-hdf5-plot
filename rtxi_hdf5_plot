@@ -1,0 +1,46 @@
+#!/usr/bin/python3
+
+import h5py
+import argparse
+import numpy as np
+import matplotlib.pyplot as plt
+
+parser = argparse.ArgumentParser(description='Parsing HDF5')
+parser.add_argument('filename')
+args = parser.parse_args()
+
+try:
+    f = h5py.File(args.filename, 'r')
+except:
+    print(f'Something went wrong opening \'{args.filename}\'')
+else:
+    num_trials = len(f.keys())
+    cols = 3 
+    rows = (num_trials + cols - 1) // cols
+
+    fig, axs = plt.subplots(rows, cols, figsize=(15, rows * 4))
+    axs = axs.flatten()
+
+    def plot_datasets(name, object):
+        time, value = zip(*object.fields(['time', 'value'])[:])
+        return time, value 
+    
+    # Plot data from all trials
+    for trial in f.keys():
+        trial_num = trial[5:]
+        idx = int(trial_num) - 1
+
+        # Plot trial if it has synchronous data, else remove
+        if f[trial]['Synchronous Data']:
+            axs[idx].set_title(f'Trial {trial_num}')
+            time, value = f[trial]['Synchronous Data'].visititems(plot_datasets)
+            axs[idx].plot(time, value)
+        else:
+            axs[idx].axis('off')
+
+    # Remove unused plots 
+    for i in range(num_trials, len(axs)):
+        axs[i].axis('off')
+
+    plt.tight_layout()
+    plt.show()

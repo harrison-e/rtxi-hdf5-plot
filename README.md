@@ -1,6 +1,6 @@
 # HDF5 Viewer
 
-Python utility for viewing data in HDF5 files.
+Python utility for plotting synchronous data in HDF5 files from RTXI.
 
 ## Requirements
 - Python 3
