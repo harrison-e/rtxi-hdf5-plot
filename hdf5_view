@@ -3,13 +3,9 @@
 import h5py
 import argparse
 
-# Parser
-parser = argparse.ArgumentParser(description='Parsing HDF5')
-parser.add_argument('filename')
-
-# f = h5py.File()
-
 if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description='Parsing HDF5')
+    parser.add_argument('filename')
     args = parser.parse_args()
     print(args.filename)
 
