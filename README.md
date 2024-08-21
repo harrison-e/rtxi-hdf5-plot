@@ -1,4 +1,4 @@
-# HDF5 Viewer
+# HDF5 Plotter for RTXI Data 
 
 Python utility for plotting synchronous data in HDF5 files from RTXI.
 
