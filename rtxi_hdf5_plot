@@ -39,8 +39,8 @@ else:
             for key in f[trial]['Synchronous Data']:
                 dset = f[trial]['Synchronous Data'][key]
                 time, value = zip(*dset.fields(['time', 'value'])[:])
-                axs[idx].plot(time, value, color=(colors[color % len(colors)]))
-                color += 1
+                axs[idx].plot(time[1:], value[1:], color=(colors[color]))
+                color = (color + 1) % len(colors)
         else:
             axs[idx].axis('off')
 
